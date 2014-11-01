@@ -16,6 +16,8 @@ config_group_id:
     - pattern: ^.*?mmsGroupId.*?$
     - repl: mmsGroupId={{ salt['pillar.get']('mongo_mms:group_id') }}
     - append_if_not_found: True
+    - require:
+        - pkg: install_mms_agent
 
 config_api_key:
   file.replace:
@@ -23,6 +25,8 @@ config_api_key:
     - pattern: ^.*?mmsApiKey.*?$
     - repl: mmsApiKey={{ salt['pillar.get']('mongo_mms:api_key') }}
     - append_if_not_found: True
+    - require:
+        - pkg: install_mms_agent
 
 make_data_dir:
   file.directory:
@@ -30,6 +34,10 @@ make_data_dir:
     - owner: mongod
 
 start_mms_agent:
-  service.runing:
+  service.running:
     - enable: True
     - name: mongodb-mms-automation-agent
+    - require:
+        - pkg: install_mms_agent
+        - file: config_group_id
+        - file: config_api_key
