@@ -11,6 +11,11 @@ resolve_host_name:
     - names:
         - {{ grains['host'] }}
 
+mongod_user:
+  user.present:
+    - name: mongod
+    - system: True
+
 config_group_id:
   file.replace:
     - name: /etc/mongodb-mms/automation-agent.config
@@ -34,6 +39,8 @@ make_data_dir:
     - name: /data
     - owner: mongod
     - group: mongod
+    - require:
+        - user: mongod_user
 
 start_mms_agent:
   service.running:
