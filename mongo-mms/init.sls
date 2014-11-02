@@ -1,14 +1,20 @@
 {% from "mongo-mms/map.jinja" import mongo_mms with context %}
 
+download_mms_agent_pkg:
+  cmd.run:
+    - name: wget {{ mongo_mms.pkg_source }}
+    - cwd: /root
+
 install_mms_agent:
   pkg.installed:
     - sources:
-        - mongodb-mms-automation-agent-manager: {{ mongo_mms.pkg_source }}
+        - mongodb-mms-automation-agent-manager: /root/{{ mongo_mms.pkg_source.split('/')[-1] }}
 
-mongod_user:
-  user.present:
-    - name: mongod
-    - system: True
+resolve_host_name:
+  host.present:
+    - ip: 127.0.0.1
+    - names:
+        - {{ grains['host'] }}
 
 config_group_id:
   file.replace:
@@ -32,6 +38,7 @@ make_data_dir:
   file.directory:
     - name: /data
     - owner: mongod
+    - group: mongod
 
 start_mms_agent:
   service.running:
