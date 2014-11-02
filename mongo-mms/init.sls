@@ -1,14 +1,9 @@
 {% from "mongo-mms/map.jinja" import mongo_mms with context %}
 
-download_mms_agent_pkg:
-  cmd.run:
-    - name: wget {{ mongo_mms.pkg_source }}
-    - cwd: /root
-
 install_mms_agent:
   pkg.installed:
     - sources:
-        - mongodb-mms-automation-agent-manager: /root/{{ mongo_mms.pkg_source.split('/')[-1] }}
+        - mongodb-mms-automation-agent-manager: {{ mongo_mms.pkg_source }}
 
 resolve_host_name:
   host.present:

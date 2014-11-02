@@ -1,14 +1,13 @@
-{% set mms_agent_version = salt['pillar.get']('mongo_mms:agent_version', '1.2.1.689-1') %}
 {% set mongo_mms = salt['grains.filter_by']({
     'Debian': {
         'pkgs': [
         ],
-        'pkg_source': 'https://mms.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager_{{ mms_agent_version }}_amd64.deb'
+        'pkg_source': 'https://mms.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager_1.2.1.689-1_amd64.deb'
     },
     'RedHat': {
         'pkgs': [
         ],
-        'pkg_source': 'https://mms.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager-{{ mms_agent_version }}.x86_64.rpm'
+        'pkg_source': 'https://mms.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager-1.2.1.689-1.x86_64.rpm'
     },
     'Arch': {
         'pkgs': [
