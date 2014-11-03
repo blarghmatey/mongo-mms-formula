@@ -5,11 +5,18 @@ install_mms_agent:
     - sources:
         - mongodb-mms-automation-agent-manager: {{ mongo_mms.pkg_source }}
 
+remove_localhost:
+  host.absent:
+    - ip: 127.0.0.1
+    - names:
+        - localhost
+
 resolve_host_name:
   host.present:
     - ip: 127.0.0.1
     - names:
         - {{ grains['host'] }}
+        - localhost
 
 mongod_user:
   user.present:
