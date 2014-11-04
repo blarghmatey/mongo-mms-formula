@@ -18,9 +18,9 @@ resolve_host_name:
         - {{ grains['host'] }}
         - localhost
 
-mongod_user:
+mongodb_user:
   user.present:
-    - name: mongod
+    - name: mongodb
     - system: True
 
 config_group_id:
@@ -44,10 +44,10 @@ config_api_key:
 make_data_dir:
   file.directory:
     - name: /data
-    - owner: mongod
-    - group: mongod
+    - owner: mongodb
+    - group: mongodb
     - require:
-        - user: mongod_user
+        - user: mongodb_user
     - recurse:
         - user
         - group
