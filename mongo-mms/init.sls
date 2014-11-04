@@ -48,6 +48,9 @@ make_data_dir:
     - group: mongod
     - require:
         - user: mongod_user
+    - recurse:
+        - user
+        - group
 
 start_mms_agent:
   service.running:
